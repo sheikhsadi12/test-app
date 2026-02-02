@@ -1,0 +1,5 @@
+{
+  "name": "NoteSnap AI",
+  "description": "An intelligent study assistant that extracts highlighted and marked text from documents and converts them into structured study notes.",
+  "requestFramePermissions": []
+}
