@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     // IMPORTANT: Sets the base path to relative. 
     // This fixes the "white screen" issue on GitHub Pages (404 for assets).
-    base: './', 
+    base: '/test-app/', 
     define: {
       // This injects the API_KEY from GitHub Secrets (or .env) into the code during build.
       // It replaces 'process.env.API_KEY' with the actual string value.
