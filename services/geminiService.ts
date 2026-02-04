@@ -1,12 +1,5 @@
 import { GoogleGenAI, Chat } from "@google/genai";
 
-// Ensure API key is present before initializing
-if (!process.env.API_KEY) {
-  console.error("API_KEY is missing. Please configure it in your environment variables.");
-}
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 const SYSTEM_INSTRUCTION = `
 You are an expert Study Assistant and Note Taker.
 
@@ -27,12 +20,23 @@ Your Goal: Create clean, organized, and exam-ready study notes based ONLY on the
 - NO <mark> tags. NO background colors.
 `;
 
+// Helper to get the AI client lazily.
+// This prevents the "White Screen" crash if the API key is missing at startup.
+const getAiClient = (): GoogleGenAI => {
+  const apiKey = process.env.API_KEY;
+  
+  if (!apiKey) {
+    throw new Error("API Key is missing. Please check your GitHub Secrets and Build Workflow configuration.");
+  }
+  
+  return new GoogleGenAI({ apiKey });
+};
+
 // Initialize a chat session
 export const initializeChatSession = (): Chat => {
-  if (!process.env.API_KEY) {
-    throw new Error("API Key is missing. Check your deployment settings.");
-  }
+  const ai = getAiClient();
   const modelId = "gemini-3-flash-preview";
+  
   return ai.chats.create({
     model: modelId,
     config: {
