@@ -1,6 +1,12 @@
 import { GoogleGenAI, Chat } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Ensure API key is present before initializing
+const apiKey = process.env.API_KEY;
+if (!apiKey) {
+  console.error("API_KEY is missing. Please configure it in your environment variables.");
+}
+
+const ai = new GoogleGenAI({ apiKey: apiKey || 'dummy-key-for-init' });
 
 const SYSTEM_INSTRUCTION = `
 You are an expert Study Assistant and Note Taker.
@@ -24,6 +30,9 @@ Your Goal: Create clean, organized, and exam-ready study notes based ONLY on the
 
 // Initialize a chat session
 export const initializeChatSession = (): Chat => {
+  if (!apiKey) {
+    throw new Error("API Key is missing. Check your deployment settings.");
+  }
   const modelId = "gemini-3-flash-preview";
   return ai.chats.create({
     model: modelId,
@@ -54,6 +63,7 @@ export const sendImageAnalysisRequest = async (
 
     parts.push({ text: prompt });
 
+    // The SDK accepts an object with a 'message' property
     const response = await chat.sendMessage({
       message: parts,
     });
