@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Upload, FileText, Image as ImageIcon, X, Plus } from 'lucide-react';
-import { UploadedFile } from '../types';
+import { UploadedFile } from '../../types';
 
 interface FileUploaderProps {
   onFilesSelected: (files: File[]) => void;

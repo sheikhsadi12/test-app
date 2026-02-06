@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Send, Sparkles, Layers } from 'lucide-react';
 import { ChatMessage } from './ChatMessage';
-import { ChatMessage as ChatMessageType, ProcessingStatus } from '../types';
+import { ChatMessage as ChatMessageType, ProcessingStatus } from '../../types';
 
 interface ChatInterfaceProps {
   messages: ChatMessageType[];
